@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments_BottoNav.AccountFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:id="@+id/area_profile"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true">
+
+                        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                            android:id="@+id/profile"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_person_gray"
+                            android:scaleType="centerCrop"
+                            app:c_border_width="1dp"
+                            app:c_border_color="@color/colorBlack"/>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/camera_icon"/>
+
+                    </RelativeLayout>
+                    <ImageButton
+                        android:id="@+id/btn_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_settings"
+                        android:tooltipText="Settings"
+                        android:textAlignment="center"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/custom_button_no_border"
+                        android:padding="5dp"/>
+
+                    <LinearLayout
+                        android:layout_below="@+id/area_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:paddingHorizontal="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Na Cha Nguang Non Na"
+                            android:textAlignment="center"
+                            android:textSize="18dp"
+                            android:textColor="@color/colorBlack"
+                            android:drawableLeft="@drawable/ic_person_black_18dp"
+                            android:drawablePadding="5dp"/>
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="301, Khwaeng Wong Sawang, Khet Bang Sue,\n Krung Thep Maha Nakhon 10800"
+                            android:textAlignment="center"
+                            android:textSize="14dp"
+                            android:textColor="@color/colorGay"
+                            android:drawableLeft="@drawable/ic_location_on_black_14dp"
+                            android:drawablePadding="5dp"/>
+
+                        <TextView
+                            android:id="@+id/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nong_Tu_Eng@email.com"
+                            android:textAlignment="center"
+                            android:textSize="14dp"
+                            android:textColor="@color/colorGay"
+                            android:drawableLeft="@drawable/ic_mail_black_14dp"
+                            android:drawablePadding="5dp" />
+
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="081 - 2345678"
+                            android:textAlignment="center"
+                            android:textSize="14dp"
+                            android:textColor="@color/colorGay"
+                            android:drawableLeft="@drawable/ic_phone_black_14dp"
+                            android:drawablePadding="5dp"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+
+                <Button
+                    android:id="@+id/user_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_no_border"
+                    android:drawableLeft="@drawable/ic_person_black_18dp"
+                    android:drawableRight="@drawable/ic_arrow_right_18"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="sans-serif"
+                    android:text="User Information"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+
+                <Button
+                    android:id="@+id/address_books"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_no_border"
+                    android:drawableLeft="@drawable/ic_location_on_black_18dp"
+                    android:drawableRight="@drawable/ic_arrow_right_18"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Address Books"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Distance ( Km. )"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:layout_marginBottom="5dp"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_gps_black_18"/>
+
+                    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                        android:id="@+id/discrete_seek_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dsb_min="0"
+                        app:dsb_max="100"
+                        app:dsb_allowTrackClickToDrag="false"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_no_border"
+                    android:fontFamily="sans-serif"
+                    android:text="LOGOUT"
+                    android:textAlignment="center"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".RegisterUserActivity"
+    android:focusableInTouchMode="true">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/ic_arrow_left"
+        android:background="@null"
+        android:layout_alignParentStart="true" />
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/clean"
+        android:scaleType="centerCrop"
+        android:layout_marginVertical="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/logo"
+        android:background="@drawable/shape_reat_1">
+
+        <TextView
+            android:id="@id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SignUp User"
+            android:textColor="@color/colorBlack"
+            android:textSize="28dp"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@id/subtitle"
+            android:layout_below="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You don't have a general user account, right?"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="14dp"
+            android:padding="5dp"
+            android:layout_centerHorizontal="true"/>
+
+        <RelativeLayout
+            android:layout_below="@id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/shape_reat_1"
+            android:backgroundTint="#FF0000"
+            android:paddingTop="30dp">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/area_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="15dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/ic_person_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/ic_phone_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:hint="Phone ( 0xxxxxxxxx )"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/ic_mail_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:hint="example@mail.com"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/custom_edittext"
+                        android:drawableLeft="@drawable/ic_lock_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:maxLength="8"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="8"
+                        app:counterTextColor="@color/colorWhite"
+                        app:hintEnabled="false">
+
+                        <EditText
+                            android:id="@+id/con_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/custom_edittext"
+                            android:drawableLeft="@drawable/ic_lock_black_24dp"
+                            android:drawablePadding="5dp"
+                            android:hint="Confirm Password"
+                            android:inputType="textPassword"
+                            android:maxLength="8"
+                            android:paddingLeft="10dp"
+                            android:textSize="12dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/btn_register"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/custom_button"
+                            android:enabled="false"
+                            android:text="REGISTER"
+                            android:textSize="12dp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/goto_register_maid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Are you a maid ? Register as maid"
+        android:textColor="@color/colorWhite"
+        android:textSize="12dp"
+        android:layout_margin="20dp"/>
+</RelativeLayout>

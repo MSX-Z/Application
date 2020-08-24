@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailSearchActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_reat_1">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left"
+            android:background="@null"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detail"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_below="@id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Job description"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginVertical="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="10dp"
+            android:elevation="90dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="5dp">
+
+                    <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                        android:id="@+id/profile"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_person_gray"
+                        app:c_border="true"
+                        app:c_border_color="@color/colorBlack"
+                        android:tooltipText="Profile" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/title2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Title"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="12dp"
+                                android:textAlignment="center"
+                                android:layout_alignParentLeft="true"/>
+
+                            <TextView
+                                android:id="@+id/distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5 KM."
+                                android:textColor="@color/colorWhite"
+                                android:textSize="12dp"
+                                android:textAlignment="center"
+                                android:layout_alignParentRight="true"/>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="address"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="8dp"
+                            android:textAlignment="center"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="5dp"/>
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="หลายท่านที่กำลังเรียนภาษาอังกฤษอยู่โดยเฉพาะการเขียนนั้น Paragraph คือสิ่งแรกที่ท่านจำเป็นต้องเริ่มเรียนในคลาสเลยก็ว่าได้ เพราะการเขียน Paragraph นั้นจะเป็นตัวต่อยอดให้ท่านสามารถพัฒนาการเขียนไปในจุดที่สูงกว่าได้เช่นการเขียน Essay การเขียน Complaint การเขียน Report เป็นต้น"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12dp"
+                    android:justificationMode="inter_word"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/area_property"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true">
+
+                        <TextView
+                            android:id="@+id/property1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="property1"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="8dp"
+                            android:paddingHorizontal="3dp"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/property2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="property2"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="8dp"
+                            android:paddingHorizontal="3dp"
+                            android:textAlignment="center" />
+                        <TextView
+                            android:id="@+id/property3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="property3"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="8dp"
+                            android:paddingHorizontal="3dp"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/area_click"
+                        android:layout_below="@id/area_property"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginVertical="5dp">
+
+                        <Button
+                            android:id="@+id/contact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:text="contact"
+                            android:background="@drawable/custom_button"/>
+
+                        <Button
+                            android:id="@+id/buy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:text="buy"
+                            android:background="@drawable/custom_button"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

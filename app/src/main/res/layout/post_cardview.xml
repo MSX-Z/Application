@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/card_view"
+    app:cardCornerRadius="10dp"
+    android:layout_marginTop="10dp">
+    <!--app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_person_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp"
+                        android:textAlignment="center"
+                        android:layout_alignParentLeft="true"/>
+
+                    <TextView
+                        android:id="@+id/distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignParentRight="true"
+                        android:text="0.0 Km."
+                        android:textAlignment="center"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ciaron Barnard"
+                        android:textSize="14dp"
+                        android:textAlignment="center"
+                        android:layout_alignParentLeft="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingHorizontal="10dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/desc"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="DESC"-->
+<!--                android:textColor="@color/colorBlack"-->
+<!--                android:textSize="14dp"-->
+<!--                android:paddingHorizontal="3dp" />-->
+
+<!--        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
+
+<!--            <ru.embersoft.expandabletextview.ExpandableTextView-->
+<!--                android:id="@+id/expandable_textview"-->
+<!--                android:paddingHorizontal="3dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:etv_animationTime="20"-->
+<!--                app:etv_expandLines="3"-->
+<!--                app:etv_showLine="false"-->
+<!--                app:etv_textContentSize="14dp"-->
+<!--                app:etv_expandBitmap="@drawable/ic_keyboard_arrow_down"-->
+<!--                app:etv_shrinkBitmap="@drawable/ic_keyboard_arrow_up"-->
+<!--                app:etv_textExpand="Show More"-->
+<!--                app:etv_textShrink="Show Less"-->
+<!--                app:etv_textContentColor="@color/colorBlack"-->
+<!--                app:etv_textStateColor="@color/colorGay" />-->
+            <nb.scode.lib.ExpandableTextView
+                android:id="@+id/expandable_textview"
+                android:paddingHorizontal="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:etv_animationTime="20"
+                app:etv_expandLines="3"
+                app:etv_showLine="false"
+                app:etv_textContentSize="14dp"
+                app:etv_expandBitmap="@drawable/ic_keyboard_arrow_down"
+                app:etv_shrinkBitmap="@drawable/ic_keyboard_arrow_up"
+                app:etv_textExpand="Show More"
+                app:etv_textShrink="Show Less"
+                app:etv_textContentColor="@color/colorBlack"
+                app:etv_textStateColor="@color/colorGay" />
+
+        </LinearLayout>
+<!--        <com.ms.square.android.expandabletextview.ExpandableTextView-->
+<!--            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/expandable_text_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            expandableTextView:maxCollapsedLines="5"-->
+<!--            expandableTextView:animDuration="200">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/expandable_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/colorBlack"-->
+<!--                android:paddingHorizontal="10dp"/>-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/expand_collapse"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="right|bottom"-->
+<!--                android:paddingHorizontal="16dp"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:background="@color/colorWhite"/>-->
+
+<!--        </com.ms.square.android.expandabletextview.ExpandableTextView>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp">
+
+            <Button
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/custom_button"
+                android:fontFamily="sans-serif"
+                android:text="Contact"
+                android:textAllCaps="false"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price:"
+                    android:textSize="12dp"
+                    android:textAlignment="center"
+                    android:paddingHorizontal="3dp"/>
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textAlignment="center"
+                    android:text="500฿." />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
+
+            <LinearLayout
+                android:id="@+id/area_property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginVertical="10dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/property1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="property1"
+                    android:textSize="12dp"
+                    android:paddingHorizontal="3dp"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/property2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="property2"
+                    android:textSize="12dp"
+                    android:paddingHorizontal="3dp"
+                    android:textAlignment="center" />
+                <TextView
+                    android:id="@+id/property3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="property3"
+                    android:textSize="12dp"
+                    android:paddingHorizontal="3dp"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/area_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginVertical="10dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:textSize="12dp"
+                    android:paddingHorizontal="3dp"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_star" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

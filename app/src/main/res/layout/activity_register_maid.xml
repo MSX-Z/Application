@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".RegisterMaidActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_reat_1">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left"
+            android:background="@null"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register Maid"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true" />
+
+        <ImageButton
+            android:id="@+id/btn_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_below="@id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register Maid Account"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="12dp"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:paddingStart="64dp"
+        android:paddingEnd="64dp"
+        android:paddingVertical="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/profile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:c_border="true"
+            app:c_border_color="@color/colorBlack"
+            app:c_border_width="3dp"
+            android:src="@drawable/ic_person_gray"
+            android:layout_alignParentLeft="true"
+            android:tooltipText="Profile"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_id_card"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:src="@drawable/id_card"
+            android:scaleType="centerCrop"
+            android:layout_alignParentRight="true"
+            app:riv_border_width="3dp"
+            app:riv_border_color="@color/colorBlack"
+            app:riv_corner_radius="10dip"
+            android:tooltipText="ID Card"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_below="@+id/image">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/image"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Name"
+                android:textSize="12dp"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/id_card"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="ID Card ( x-xxxx-xxxxx-xx-x )"
+                android:textSize="12dp"
+                android:inputType="text"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/birth"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_cake_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Date of birth ( dd/mm/yyyy B.E. )"
+                android:textSize="12dp"
+                android:inputType="text"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Address"
+                android:textSize="12dp"
+                android:inputType="textPostalAddress|textMultiLine"
+                android:paddingLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/county"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:hint="County"
+                    android:textSize="12dp"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="1dp"/>
+
+                <EditText
+                    android:id="@+id/state"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/custom_edittext"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:hint="State"
+                    android:textSize="12dp"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="1dp"/>
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_edittext"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:hint="City"
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="10dp"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/number_under_image"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_branding_watermark_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Number under image ( xxxx-xx-xxxxxxxx )"
+                android:textSize="12dp"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/ic_mail_black_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Email"
+                android:textSize="12dp"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:counterMaxLength="8"
+                app:counterTextColor="@color/colorBlack"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:drawablePadding="5dp"
+                    android:hint="Password"
+                    android:textSize="12dp"
+                    android:inputType="textPassword"
+                    android:paddingLeft="10dp"
+                    android:maxLength="8"
+                    android:drawableLeft="@drawable/ic_lock_black_24dp"
+                    android:background="@drawable/custom_edittext"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="8"
+                app:counterTextColor="@color/colorBlack"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/con_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:drawablePadding="5dp"
+                    android:hint="Confirm Password"
+                    android:textSize="12dp"
+                    android:inputType="textPassword"
+                    android:paddingLeft="10dp"
+                    android:maxLength="8"
+                    android:drawableLeft="@drawable/ic_lock_black_24dp"
+                    android:background="@drawable/custom_edittext"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="@drawable/custom_button"
+                    android:enabled="true"
+                    android:text="REGISTER"
+                    android:textSize="12dp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/scrollView"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        app:indicatorName="BallPulseIndicator" />
+
+</RelativeLayout>
+

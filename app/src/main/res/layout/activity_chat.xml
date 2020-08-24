@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:background="#e8eaf6"
+    tools:context=".ChatActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bomtom_navbar">
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_person_gray"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full name"
+                    android:textColor="@color/colorWhite"
+                    android:textAlignment="center"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/status_online"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_status_online"
+                    android:background="@drawable/shape_circle_1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="example@gmail.com"
+                android:textColor="@color/colorGay"
+                android:textAlignment="center"
+                android:textSize="14dp"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container_chat"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/area_chat" />
+
+    <LinearLayout
+        android:id="@+id/area_chat"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_bomtom_navbar"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:hint="Aa"
+            android:paddingHorizontal="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:background="@drawable/custom_edittext_no_border"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send"
+                android:scaleType="centerCrop"
+                android:padding="5dp"
+                android:background="@null"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:id="@+id/btn_like"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_like"
+                android:scaleType="centerCrop"
+                android:padding="5dp"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

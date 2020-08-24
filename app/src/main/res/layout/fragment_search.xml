@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments_BottoNav.SearchFragment"
+    android:focusableInTouchMode="true">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/area_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_search"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_edittext_no_border"
+            android:paddingHorizontal="10dp"
+            android:hint="Search..."
+            android:textSize="14dp"
+            android:drawableEnd="@drawable/ic_search" />
+
+        <ImageButton
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_dashboard"
+            android:background="@drawable/custom_button_no_border"
+            android:layout_marginStart="5dp"
+            android:tooltipText="Filter"
+            android:padding="3dp"/>
+
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRef"
+        android:layout_below="@id/area_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingHorizontal="50dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/image_no_item"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginVertical="5dp" />
+
+        <TextView
+            android:id="@+id/title_no_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/desc_no_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/colorBlack"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_add_white"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
