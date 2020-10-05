@@ -4,39 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8eaf6"
+    android:background="@color/colorBg"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <include
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:background="@drawable/bg_top_toolbar">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOGIN"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/subtitle"
-            android:layout_below="@id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login To Your Account"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="12dp"
-            android:layout_centerHorizontal="true"/>
-
-    </RelativeLayout>
+        layout="@layout/toolbar"/>
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -76,20 +49,23 @@
     <FrameLayout
         android:id="@+id/container_fragments"
         android:layout_width="match_parent"
-        android:layout_height="494dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_above="@+id/bottomNav"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp"
+        android:paddingHorizontal="10dp"
+        android:background="@color/colorBg"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_bomtom_navbar"
-        app:menu="@menu/menu"
+        android:background="@color/colorYellow"
+        app:menu="@menu/menu_bottom_nav"
+        android:elevation="100dp"
         app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state" />
+        app:itemTextColor="@color/colorBlack"/>
 
 <!--    <android.support.design.widget.FloatingActionButton-->
 <!--        android:id="@+id/fab"-->

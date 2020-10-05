@@ -1,20 +1,26 @@
 package com.example.application.Retrieving_Data;
 
 public class ProfileUserData {
-    private String prfile_Url, name, address, email, phone;
+    private String address, email, name, phone, position, profile_Url;
+    private int distance;
+    private boolean online;
 
     public ProfileUserData(){};
 
-    public ProfileUserData(String prfile_Url, String name, String address, String email, String phone) {
-        this.prfile_Url = prfile_Url;
-        this.name = name;
+    public ProfileUserData(String address,int distance , String email, String name, boolean online, String phone, String position, String profile_Url) {
         this.address = address;
+        this.distance = distance;
         this.email = email;
+        this.name = name;
         this.phone = phone;
+        this.position = position;
+        this.online = online;
+        this.profile_Url = profile_Url;
     }
+
     //      GET     //
-    public String getPrfile_Url() {
-        return prfile_Url;
+    public String getProfile_Url() {
+        return profile_Url;
     }
 
     public String getName() {
@@ -32,9 +38,22 @@ public class ProfileUserData {
     public String getPhone() {
         return phone;
     }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
     //      SET     //
-    public void setPrfile_Url(String prfile_Url) {
-        this.prfile_Url = prfile_Url;
+    public void setProfile_Url(String profile_Url) {
+        this.profile_Url = profile_Url;
     }
 
     public void setName(String name) {
@@ -53,14 +72,29 @@ public class ProfileUserData {
         this.phone = phone;
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
     @Override
     public String toString() {
         return "ProfileUserData{" +
-                "prfile_Url='" + prfile_Url + '\'' +
+                "profile_Url='" + profile_Url + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", position='" + position + '\'' +
+                ", distance=" + distance +
+                ", online=" + online +
                 '}';
     }
 }

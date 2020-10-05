@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments_BottoNav.AccountFragment">
+    android:background="@color/colorBg"
+    tools:context=".Fragments_BottomNav.AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,7 +18,6 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
@@ -28,37 +28,38 @@
 
                     <RelativeLayout
                         android:id="@+id/area_profile"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_centerHorizontal="true">
 
                         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
                             android:id="@+id/profile"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:src="@drawable/ic_person_gray"
                             android:scaleType="centerCrop"
                             app:c_border_width="1dp"
                             app:c_border_color="@color/colorBlack"/>
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:src="@drawable/camera_icon"/>
 
                     </RelativeLayout>
-                    <ImageButton
-                        android:id="@+id/btn_setting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_settings"
-                        android:tooltipText="Settings"
-                        android:textAlignment="center"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/custom_button_no_border"
-                        android:padding="5dp"/>
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/btn_setting"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_settings"-->
+<!--                        android:tooltipText="Settings"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:background="@drawable/custom_button_no_border"-->
+<!--                        android:padding="5dp"/>-->
 
                     <LinearLayout
                         android:layout_below="@+id/area_profile"
@@ -86,8 +87,7 @@
                             android:layout_height="wrap_content"
                             android:text="301, Khwaeng Wong Sawang, Khet Bang Sue,\n Krung Thep Maha Nakhon 10800"
                             android:textAlignment="center"
-                            android:textSize="14dp"
-                            android:textColor="@color/colorGay"
+                            android:textColor="@color/colorGray"
                             android:drawableLeft="@drawable/ic_location_on_black_14dp"
                             android:drawablePadding="5dp"/>
 
@@ -97,8 +97,7 @@
                             android:layout_height="wrap_content"
                             android:text="Nong_Tu_Eng@email.com"
                             android:textAlignment="center"
-                            android:textSize="14dp"
-                            android:textColor="@color/colorGay"
+                            android:textColor="@color/colorGray"
                             android:drawableLeft="@drawable/ic_mail_black_14dp"
                             android:drawablePadding="5dp" />
 
@@ -108,8 +107,7 @@
                             android:layout_height="wrap_content"
                             android:text="081 - 2345678"
                             android:textAlignment="center"
-                            android:textSize="14dp"
-                            android:textColor="@color/colorGay"
+                            android:textColor="@color/colorGray"
                             android:drawableLeft="@drawable/ic_phone_black_14dp"
                             android:drawablePadding="5dp"/>
 
@@ -117,8 +115,16 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/container_post_me"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
@@ -141,7 +147,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
@@ -164,7 +170,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginTop="10dp"
+                android:id="@+id/area_discrete_seek_bar"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
@@ -192,12 +199,15 @@
                         app:dsb_min="0"
                         app:dsb_max="100"
                         app:dsb_allowTrackClickToDrag="false"
-                        />
+                        app:dsb_indicatorColor="@color/colorGreenTrue"
+                        app:dsb_rippleColor="@color/colorGreenTrue"
+                        app:dsb_progressColor="@color/colorGreenTrue"/>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
@@ -206,11 +216,12 @@
                     android:id="@+id/btn_logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button_no_border"
-                    android:fontFamily="sans-serif"
-                    android:text="LOGOUT"
-                    android:textAlignment="center"
-                    android:textSize="18dp" />
+                    android:text="Logout"
+                    android:textSize="18dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorRadFalse"
+                    android:drawablePadding="5dp"
+                    android:background="@drawable/custom_button_no_border"/>
 
             </androidx.cardview.widget.CardView>
 

@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,118 +34,15 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private EditText email,password;
-    private TextView forget_password,goto_register;
+    private TextView btn_forget_password,btn_sign_up;
     private Button login;
-    private ProgressDialog progressDialog;
-    private FirebaseAuth auth;
-    
-    private ConnectivityManager connectivityManager;
-    private NetworkInfo networkInfo;
+    private AVLoadingIndicatorView loading;
 
-    private String EmailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private FirebaseAuth auth;
 
     private boolean doubleBackToExitPressedOnce = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        forget_password = findViewById(R.id.forget_password);
-        login = findViewById(R.id.login);
-        goto_register = findViewById(R.id.goto_register);
-        progressDialog = new ProgressDialog(this);
-
-        auth = FirebaseAuth.getInstance();
-        ////////////////////////////////////////////////////////////
-
-        email.addTextChangedListener(textWatcher);
-        password.addTextChangedListener(textWatcher);
-
-        ////////////////////////////////////////////////////////////
-
-        if(auth.getCurrentUser() != null && auth.getCurrentUser().isEmailVerified()){
-            Log.d(TAG, "onCreate: if "+auth.getCurrentUser().getUid()+" "+auth.getCurrentUser().getEmail()+" "+auth.getCurrentUser().isEmailVerified());
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            finish();
-        }else{
-//            Log.d(TAG, "onCreate: else "+auth.getCurrentUser().getUid()+" "+auth.getCurrentUser().getEmail()+" "+auth.getCurrentUser().isEmailVerified());
-        }
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String Email = email.getText().toString().trim();
-                String Password = password.getText().toString().trim();
-
-                if(!Email.matches(EmailPattern)){
-                    email.setError("Invalid email address.");
-                    return;
-                }
-                else if(Password.length() < 8){
-                    password.setError("Password must be longer than 8 character.");
-                    return;
-                }
-                else{
-                    Login(Email,Password);
-                }
-            }
-        });
-
-        forget_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,ForgetPasswordActivity.class));
-            }
-        });
-
-        goto_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterUserActivity.class));
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart Have User: "+auth.getCurrentUser());
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-
+    /////////////////////////////*  ปุ่ม Back ของโทรศัพท์ จะต้องกด 2 ครั้งเพื่อออก  *//////////////////////////////////
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -161,9 +59,82 @@ public class LoginActivity extends AppCompatActivity {
         }, 2000);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        Log.d(TAG, "onCreate: ");
+
+    ////////////////////////////*   การอ้างอิง Object View ใน Layout XML นั้นๆ  *////////////////////////////
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        btn_forget_password = findViewById(R.id.btn_forget_password);
+        login = findViewById(R.id.login);
+        btn_sign_up = findViewById(R.id.btn_sign_up);
+        loading = findViewById(R.id.loading);
+
+    ///////////////////////////////////*   เชื่อมต่อ Authentication */////////////////////////////////////
+        auth = FirebaseAuth.getInstance();
+
+    /////////////////*   เชื่อมต่อกับ TextWatcher เพื่อตรวจสอบการเปลี่ยนแปลง Object View ของ EditText  *////////////////
+        email.addTextChangedListener(textWatcher);
+        password.addTextChangedListener(textWatcher);
+
+    ////////////////////////*   Auto Login เมื่อมี User และ ได้ทำการ Verify Email แล้ว   */////////////////////
+        if(auth.getCurrentUser() != null && auth.getCurrentUser().isEmailVerified()){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
+        }
+
+    /////////////////////////*  Check is correct and Call Login Function  */////////////////////////
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Email = email.getText().toString().trim();
+                String Password = password.getText().toString().trim();
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+                    email.setError("Invalid email address.");
+                    return;
+                }
+                else if(Password.length() < 8){
+                    password.setError("Password must be longer than 8 character.");
+                    return;
+                }
+                else{
+                    loading.smoothToShow();
+                    Login(Email,Password);
+                }
+            }
+        });
+
+    /////////////////////////////*  Action ไปหน้า ForgetPasswordActivity  *////////////////////////////
+        btn_forget_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgetPasswordActivity.class));
+            }
+        });
+
+    /////////////////////////////*  Action ไปหน้า ForgetPasswordActivity  *////////////////////////////
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ChooseSignUpActivity.class));
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
+        super.onDestroy();
+    }
+
+
+
+    ///////////////////////////*  Login Function and isEmailVerified  *//////////////////////////////
     private void Login(String email,String password){
-        progressDialog.setMessage("Please wait login ...");
-        progressDialog.show();
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
@@ -171,19 +142,57 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onSuccess: "+authResult.getUser().isEmailVerified());
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
-                    progressDialog.dismiss();
-                }else{
+                }else
                     Toast.makeText(LoginActivity.this, "Please confirm your email.", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
+                loading.smoothToHide();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
+                loading.smoothToHide();
             }
         });
+    }
+
+    ///////////////////////*   ตรวจสอบการเปลี่ยนแปลง Object View ของ EditText  *//////////////////////////////
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String Email = email.getText().toString().trim();
+            String Password = password.getText().toString().trim();
+            login.setEnabled(!Email.isEmpty() && !Password.isEmpty() && Password.length() == 8);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+}
+
+
+/* Comments 1/10/2020 19:00 Check:True
+    - Auto Login ก็ต่อเมื่อ มีผู้ใช้งานคนปัจจุบันของมือถือเครื่องนั้นๆ ค้างอยู่ในระบบ และ ผู้ใช้งานคนดังกล่างจะต้อง Verify Email แล้ว
+*/
+
+//    private String EmailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+//    private ConnectivityManager connectivityManager;
+//    private NetworkInfo networkInfo;
+
+//    private boolean isConnection(){
+//        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+//        networkInfo = connectivityManager.getActiveNetworkInfo();
+//        return (networkInfo != null) && networkInfo.isConnected();
+//    }
+
 //        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 //            @Override
 //            public void onComplete(@NonNull Task<AuthResult> task) {
@@ -205,30 +214,3 @@ public class LoginActivity extends AppCompatActivity {
 //                progressDialog.dismiss();
 //            }
 //        });
-    }
-
-    private boolean isConnection(){
-        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null) && networkInfo.isConnected();
-    }
-    
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String Email = email.getText().toString().trim();
-            String Password = password.getText().toString().trim();
-            login.setEnabled(!Email.isEmpty() && !Password.isEmpty() && Password.length() == 8);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-}

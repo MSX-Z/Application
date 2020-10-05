@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@color/colorBg"
     tools:context=".IntroActivity">
 
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Welcome"
             android:textAlignment="center"
-            android:textColor="?android:attr/colorForeground"
+            android:textColor="@color/colorBlack"
             android:textSize="34dp"
             android:textStyle="bold" />
 
@@ -35,20 +35,19 @@
             android:layout_height="wrap_content"
             android:text="Application"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorYellow"
             android:textSize="18dp"
-            android:textStyle="normal" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loading"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:indicatorName="BallPulseIndicator"
+        app:indicatorColor="@color/colorGreenTrue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.358" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

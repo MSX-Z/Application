@@ -2,6 +2,8 @@ package com.example.application.Adapter;
 
 import com.example.application.Retrieving_Data.Post;
 
+import java.util.Comparator;
+
 public class SumPostDistance implements Comparable{
     private Post post;
     private double distance;
@@ -43,6 +45,13 @@ public class SumPostDistance implements Comparable{
         int compareage = (int)((SumPostDistance)o).distance;
         return ((int)this.distance - compareage);
     }
+//    @Override
+//    public int compareTo(Object o) {
+//
+//        long compareage = Long.parseLong(((SumPostDistance)o).post.getTimestamp());
+//        return (int)(Long.parseLong(this.post.getTimestamp())-compareage);
+//    }
+
 
     @Override
     public String toString() {

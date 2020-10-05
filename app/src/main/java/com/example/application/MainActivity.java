@@ -3,27 +3,33 @@ package com.example.application;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,11 +41,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.application.Fragments_BottoNav.AccountFragment;
-import com.example.application.Fragments_BottoNav.ChatFragment;
-import com.example.application.Fragments_BottoNav.ListFragment;
-import com.example.application.Fragments_BottoNav.SearchFragment;
+import com.example.application.Fragments_BottomNav.AccountFragment;
+import com.example.application.Fragments_BottomNav.ChatFragment;
+import com.example.application.Fragments_BottomNav.ListFragment;
+import com.example.application.Fragments_BottomNav.SearchFragment;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -49,7 +54,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,21 +62,26 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private TextView title, subtitle, title_no_item, desc_no_item;
+import id.zelory.compressor.Compressor;
+
+public class MainActivity extends AppCompatActivity implements AccountFragment.onFragmentBtnSelect {
+
+    private Toolbar toolbar;
+
+    private TextView title_no_item, desc_no_item;
     private LinearLayout linear_layout;
     private ImageView image_no_item;
     private FrameLayout container_fragments;
     private BottomNavigationView bottomNavigationView;
-    private static final String TAG = "MainActivity";
-    private int LOCATION_REQUEST_CODE = 10001;
-    private Dialog dialog;
 
-    private boolean loadFragments;
+    private Dialog dialog;
 
     private DatabaseReference ref;
     private FirebaseAuth auth;
@@ -81,21 +90,50 @@ public class MainActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
 
+    private int LOCATION_REQUEST_CODE = 10001;
     private HashMap<String, Double> Hlocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
 
-    private HashMap<String, Object> onlineStatus;
-
     private boolean doubleBackToExitPressedOnce = false;
+    private boolean loadFragments = true;
 
-    final Fragment searchFragment = new SearchFragment();
-    final Fragment chatFragment = new ChatFragment();
-    final Fragment listFragment = new ListFragment();
-    final Fragment accountFragment = new AccountFragment();
+    private final Fragment searchFragment = new SearchFragment();
+    private final Fragment chatFragment = new ChatFragment();
+    private final Fragment listFragment = new ListFragment();
+    private final Fragment accountFragment = new AccountFragment();
 
-    final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = searchFragment;
+    private final FragmentManager fm = getSupportFragmentManager();
+    private Fragment active = searchFragment;
+
+    private String cameraPermissions[];
+    private String storagePermissions[];
+
+    private static final int CAMERA_REQUEST_CODE = 100;
+    private static final int STORAGE_REQUEST_CODE = 200;
+    private static final int IMAGE_PICK_GALLERY_CODE = 300;
+    private static final int IMAGE_PICK_CAMERA_CODE = 400;
+
+    private Uri image_Uri;
+
+    private static final String TAG = "MainActivity";
+
+    /////////////////////////////*  ปุ่ม Back ของโทรศัพท์ จะต้องกด 2 ครั้งเพื่อออก  *//////////////////////////////////
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(MainActivity.this, "Please press back again to exit.", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +141,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "onCreate: ");
-        
+
+    //////////////////////////////////////* Toolbar *///////////////////////////////////////////////
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Search");
+
+
+    ////////////////////////////////////*  Setting Location GPS    *////////////////////////////////
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationRequest = LocationRequest.create();
@@ -111,61 +156,108 @@ public class MainActivity extends AppCompatActivity {
         locationRequest.setFastestInterval(15000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////*    กำหนด permission ของ Camera และ Gallery *///////////////////////////////
+        cameraPermissions = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        title = findViewById(R.id.title);
-        subtitle = findViewById(R.id.subtitle);
-
+    ////////////////////////////*   การอ้างอิง Object View ใน Layout XML นั้นๆ  *////////////////////////////
         container_fragments = findViewById(R.id.container_fragments);
-
         linear_layout = findViewById(R.id.linear_layout);
         image_no_item = findViewById(R.id.image_no_item);
         title_no_item = findViewById(R.id.title_no_item);
         desc_no_item = findViewById(R.id.desc_no_item);
-
         bottomNavigationView = findViewById(R.id.bottomNav);
 
+    ////////////////////////////*   เชื่อมต่อ Authentication and Database *//////////////////////////////
         ref = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
+
+    ////////////////////////////* check ว่ามีผู้ใช้งานหรือไม่ ถ้าไม่มีให้กลับไป LoginActivity *//////////////////////////
+        if(auth.getCurrentUser() == null){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+        }
+
+    //////////////////////////////////*  ถ้ามีผุ้ใช้งานให้ทำการ ดึง uid *////////////////////////////////////////
         Uid = auth.getCurrentUser().getUid();
 
-        loadFragments = true;
-
-        onlineStatus = new HashMap<String, Object>();
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        setTextToolbar("Search", "Find a housekeeper near you");
-
+    /////////////////////*  ดัก Action ของ BottomNav ว่าเลือก Item อะไร */////////////////////////////////////
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-//        bottomNavigationView.setSelectedItemId(R.id.search);
-
+    /////////////////////////*  function disconnectFromFireBase *////////////////////////////////////
+        disconnectFromFireBase();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    ///////////////////////////* อธิบายที่ Comments 1/10/2020 19:00 *////////////////////////////////////
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isConnection()) {
+            getSupportActionBar().show();
+            if(loadFragments) {
+                loadFragment();
+                loadFragments = false;
+            }
+            container_fragments.setVisibility(View.VISIBLE);
+            linear_layout.setVisibility(View.INVISIBLE);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                checkSettingsAndStartLocationUpdates();
+            } else {
+                askLocationPermission();
+            }
+        } else {
+            getSupportActionBar().hide();
+            container_fragments.setVisibility(View.INVISIBLE);
+            linear_layout.setVisibility(View.VISIBLE);
+            setEmptyItem(R.drawable.ic_disconnected, "Disconnected", "No internet connection, please check your connection.");
+        }
+        if (auth.getCurrentUser() != null) {
+            updateStatusOnline(true);
+        }
+    }
 
+    //////////////////////* เมื่อ Activity Stop จะทำการ stop การ update location gps  */////////////////////
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+        stopLocationUpdates();
+    }
+
+    //-------------------------------------* ZONE FRAGMENTS *-------------------------------------//
+    ///////////////////////////////////*  load Fragments *//////////////////////////////////////////
+    private void loadFragment() {
+        fm.beginTransaction().add(R.id.container_fragments, searchFragment, "1").commit();
+        fm.beginTransaction().add(R.id.container_fragments, chatFragment, "2").hide(chatFragment).commit();
+        fm.beginTransaction().add(R.id.container_fragments, listFragment, "3").hide(listFragment).commit();
+        fm.beginTransaction().add(R.id.container_fragments, accountFragment, "4").hide(accountFragment).commit();
+    }
+
+
+    //////////////////////* ถ้าเลือก Item อะไรที่อยู่ใน BottomNav จะทำการ Show Fm หน้าที่เลือกขึ้นมา *//////////////////////
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.search:
-                    setTextToolbar("Search", "Find a housekeeper near you");
+                    toolbar.setTitle("Search");
                     fm.beginTransaction().hide(active).show(searchFragment).commit();
                     active = searchFragment;
                     return true;
 
                 case R.id.chat:
-                    setTextToolbar("Chat", "Contact for more information");
+                    toolbar.setTitle("Chat");
                     fm.beginTransaction().hide(active).show(chatFragment).commit();
                     active = chatFragment;
                     return true;
 
                 case R.id.list:
-                    setTextToolbar("List", "All executed items");
+                    toolbar.setTitle("List");
                     fm.beginTransaction().hide(active).show(listFragment).commit();
                     active = listFragment;
                     return true;
                 case R.id.account:
-                    setTextToolbar("Account", "User related information");
+                    toolbar.setTitle("Account");
                     fm.beginTransaction().hide(active).show(accountFragment).commit();
                     active = accountFragment;
                     return true;
@@ -174,28 +266,21 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (isConnection()) {
-                checkSettingsAndStartLocationUpdates();
-                container_fragments.setVisibility(View.VISIBLE);
-                linear_layout.setVisibility(View.INVISIBLE);
+
+    //--------------------------------* ZONE LOCATION GPS *---------------------------------------//
+    //////////////////////////////////* ขอสิทธิ์เข้าถึง Location GPS *//////////////////////////////////////
+    private void askLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Log.d(TAG, "askLocationPermission: you should show an alert dialog...");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             } else {
-                container_fragments.setVisibility(View.INVISIBLE);
-                linear_layout.setVisibility(View.VISIBLE);
-                setEmptyItem(R.drawable.ic_disconnected, "Disconnected", "No internet connection, please check your connection.");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             }
-        } else {
-            askLocationPermission();
-        }
-        if (auth.getCurrentUser() != null) {
-            updateStatusOnline(true);
         }
     }
 
+    /////////////*    Check ว่าเปิด GPS หรือยัง ถ้าเปิดแล้วจะ Call startLocationUpdates function  *///////////////
     private void checkSettingsAndStartLocationUpdates() {
         Log.d(TAG, "checkSettingsAndStartLocationUpdates: ");
         LocationSettingsRequest request = new LocationSettingsRequest.Builder()
@@ -230,19 +315,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LOCATION_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                startLocationUpdates();
-            } else {
-                stopLocationUpdates();
-                ShowDialog(MainActivity.this);
-            }
-        }
-    }
-
+    ////////////////////////////////*  Updates location GPS ของโทรศัทพ์  *///////////////////////////////
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -258,10 +331,12 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
     }
 
+    //////////////////////////////* หยุด Updates location GPS ของโทรศัทพ์  *///////////////////////////////
     private void stopLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
+    /* เมื่อครบทุกๆเวลาที่ update location จะทำการ get location ขณะนั้นแล้ว call SaveLocation function เพื่อบันทึกลงในผู้ใช้งานคนดังกล่าว */
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -274,126 +349,22 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void SaveLocation(Location location) {
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-
-        Hlocation = new HashMap<String, Double>();
-        Hlocation.put("latitude", latitude);
-        Hlocation.put("longitude", longitude);
-
-        ref.child("Users").child(Uid).child("location").setValue(Hlocation).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: SaveLocation");
-                if(loadFragments){
-                    loadFragment();
-                    loadFragments = false;
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e.getMessage());
-            }
-        });
-    }
-
-    private void loadFragment() {
-        fm.beginTransaction().add(R.id.container_fragments, searchFragment, "1").commit();
-        fm.beginTransaction().add(R.id.container_fragments, chatFragment, "2").hide(chatFragment).commit();
-        fm.beginTransaction().add(R.id.container_fragments, listFragment, "3").hide(listFragment).commit();
-        fm.beginTransaction().add(R.id.container_fragments, accountFragment, "4").hide(accountFragment).commit();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-        updateStatusOnline(false);
-        stopLocationUpdates();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-        updateStatusOnline(false);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(MainActivity.this, "Please press back again to exit.", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
-    }
-
-    private void askLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Log.d(TAG, "askLocationPermission: you should show an alert dialog...");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
-                checkSettingsAndStartLocationUpdates();
-//                getLastLocation();
-            } else {
-                //Permission not granted
-                ShowDialog(MainActivity.this);
-            }
-        }
-    }
-
+    //--------------------------* ZONE NETWORK AND GPS ENABLE *-----------------------------------//
+    ////////////////////////////////* เชื่อมต่อ Internet อยู่หรือป่าว *////////////////////////////////////////
     private boolean isConnection(){
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null) && networkInfo.isConnected();
     }
 
-    private void setTextToolbar(String title,String subtitle){
-        this.title.setText(title);
-        this.subtitle.setText(subtitle);
-    }
-
+    //////////////////////////////* setEmptyItem function ถ้าไม่มี net */////////////////////////////////
     private void setEmptyItem(int image, String title, String desc) {
         image_no_item.setBackgroundResource(image);
         title_no_item.setText(title);
         desc_no_item.setText(desc);
     }
 
+    ////////////////////////////* show เมื่อมีการ denied การขอเข้าสิทธิ์ Location GPS *//////////////////////////
     private void ShowDialog(Context context) {
         dialog = new Dialog(context);
         dialog.setCancelable(false);
@@ -416,26 +387,257 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //////////////////////////* ActivityResult คือดูว่าการตอบรับ ok หรือป่าว *///////////////////////////////////
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                startLocationUpdates();
+            } else {
+                stopLocationUpdates();
+                ShowDialog(MainActivity.this);
+            }
+        }
+        if(requestCode == IMAGE_PICK_CAMERA_CODE && resultCode == RESULT_OK){// && data != null งงว่าทำไมโทรศัพท์จริงๆใช้ไม่ได้ ?
+            CropImage.activity(image_Uri).setGuidelines(CropImageView.Guidelines.ON)
+                                         .setAspectRatio(1,1)
+                                         .start(MainActivity.this);
+
+            Toast.makeText(this, "Camera: "+image_Uri, Toast.LENGTH_LONG).show();
+        }
+        if(requestCode == IMAGE_PICK_GALLERY_CODE && resultCode == RESULT_OK){// && data != null งงว่าทำไมโทรศัพท์จริงๆใช้ไม่ได้ ?
+            image_Uri = data.getData();
+            CropImage.activity(image_Uri).setGuidelines(CropImageView.Guidelines.ON)
+                                         .setAspectRatio(1,1)
+                                         .start(MainActivity.this);
+            // Nice Code
+            Toast.makeText(this, "Gallery: "+image_Uri, Toast.LENGTH_LONG).show();
+        }
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if(resultCode == RESULT_OK){
+                image_Uri = result.getUri();
+
+                File actualImage = new File(image_Uri.getPath());
+
+                Bitmap compressedImage = new Compressor.Builder(this)
+                    .setMaxWidth(255)
+                    .setMaxHeight(250)
+                    .setQuality(50)
+                    .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                    .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                    .build()
+                    .compressToBitmap(actualImage);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                compressedImage.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+                byte []final_image = byteArrayOutputStream.toByteArray(); // Final Image ที่ผ่านการ Compress แล้ว
+
+                ((AccountFragment)accountFragment).UploadImage(final_image);
+
+                Toast.makeText(this, "Image: "+image_Uri, Toast.LENGTH_LONG).show();
+
+            }else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, ""+result.getError(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    //////////////////////////////* Request Permission ต่างๆ */////////////////////////////////////////
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                checkSettingsAndStartLocationUpdates();
+                //getLastLocation();
+            } else {
+                //Permission not granted
+                ShowDialog(MainActivity.this);
+            }
+        }
+        if(requestCode ==  CAMERA_REQUEST_CODE){
+            if(grantResults.length > 0){
+                boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                if(cameraAccepted && writeStorageAccepted){
+                    pickFromCamera();
+                }else{
+                    Toast.makeText(this, "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        if(requestCode == STORAGE_REQUEST_CODE){
+            if(grantResults.length > 0){
+                boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if(writeStorageAccepted){
+                    pickFromGallery();
+                }else{
+                    Toast.makeText(this, "Please enable storage permission", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+    }
+
+    ////////////////////*  บันทึก location ที่ได้ลงไปยัง database ของผู้ใช้งานคนดังกล่าว *////////////////////////////////
+    private void SaveLocation(Location location) {
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        Hlocation = new HashMap<String, Double>();
+        Hlocation.put("latitude", latitude);
+        Hlocation.put("longitude", longitude);
+
+        ref.child("Users").child(Uid).child("location").setValue(Hlocation).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: SaveLocation");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e.getMessage());
+            }
+        });
+    }
+
+    /////////////////////////////////////////* update สถานะ online *//////////////////////////////////
     private void updateStatusOnline(boolean status){
+        HashMap<String, Object> onlineStatus = new HashMap<String, Object>();
         onlineStatus.put("online",status);
         ref.child("Users").child(Uid).updateChildren(onlineStatus).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     Log.d(TAG, "onComplete: YES");
-                }     
+                }
             }
         });
     }
 
-    private void Logout(){
+    ////////////////////////*  ตัวสอบว่าเชื่อมต่อกับ Database ไหม ถ้าไม่ก็จะ update สถานะ offline *////////////////////
+    private void disconnectFromFireBase() {
+        ref.child("Users").child(Uid).child("online").onDisconnect().setValue(false).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: disconnect successfully");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: fail disconnect "+e.getMessage());
+            }
+        });
+    }
+
+    //////////////////////////////////////////////* ออกจากระบบ *////////////////////////////////////////
+    @Override
+    public void logout() {
+        updateStatusOnline(false);
         auth.signOut();
         startActivity(new Intent(MainActivity.this,LoginActivity.class));
         finish();
     }
-    
+
+    /////////////////////////////////////* Interface ของการกดรูปที่หน้า fragment account *///////////////////
+    @Override
+    public void onButtonSelect() {
+        showImagePickDialog();
+    }
+
+    //-------------------------------* ZONE CAMERA & GALLERY *------------------------------------//
+    ///////////////////////////////*  Dialog ว่าจะเลือก Camera หรือ Gallery *//////////////////////////////
+    private void showImagePickDialog() {
+        String []option = {"Camera","Gallery"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick image form");
+        builder.setCancelable(true);
+        builder.setItems(option, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0){
+                    if(!checkCameraPermission())
+                        requestCameraPermission();
+                    else
+                        pickFromCamera();
+                }else{
+                    if(!checkStoragePermission())
+                        requestStoragePermission();
+                    else
+                        pickFromGallery();
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    /////////////////////////////////*      Camera (Check)     *////////////////////////////////////
+    private boolean checkCameraPermission(){
+        boolean result1 = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result2 = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result1 && result2;
+    }
+
+    ////////////////////////////////*      Camera (Request)     *///////////////////////////////////
+    private void requestCameraPermission(){
+        ActivityCompat.requestPermissions(this,cameraPermissions, CAMERA_REQUEST_CODE);
+    }
+
+    /////////////////////////////////*      Gallery (Check)     *////////////////////////////////////
+    private boolean checkStoragePermission(){
+        boolean result = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    ////////////////////////////////*      Gallery (Request)     *///////////////////////////////////
+    private void requestStoragePermission(){
+        ActivityCompat.requestPermissions(this,storagePermissions,STORAGE_REQUEST_CODE);
+    }
+
+    ///////////////////////////////////////*    เข้าถึง Camera  *////////////////////////////////////////
+    private void pickFromCamera(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE,"Temp Pic");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION,"Temp Description");
+
+        image_Uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,image_Uri);
+        startActivityForResult(intent,IMAGE_PICK_CAMERA_CODE);
+    }
+
+    ///////////////////////////////////////*    เข้าถึง Gallery  *////////////////////////////////////////
+    private void pickFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,IMAGE_PICK_GALLERY_CODE);
+    }
 }
 
+/* Comments 1/10/2020 19:00 Check:True
+    - onCreate:
+        - setting location gps, bottomNav
+    - onStart:
+        - Check internet
+            o กรณีที่มี internet จะทำการ load fragments ทั้งหมด
+            o กรณีที่ไม่มี internet setEmptyItem function ว่าไม่ได้เชื่อมต่อ internet
+        - Check location gps
+            o กรณีที่มี GPS ก็จะใช้งานได้ตามปกติ
+            o กรณีที่ไม่มี GPS จะ Show dialog ของ GPS ขึ้นมาเพื่อให้เปิด GPS
+        ( สรุปจะ load fragments ขึ้นมาก็ต่อเมื่อมี internet )
+    - onRestart:
+        - ลบ fragments ที่มีทั้งหมด (ไม่มีก็ไม่ทำ)
+
+    - location GPS:
+        - ขอสิทธิ์เข้าถึง location GPS ก่อน
+            o ถ้ายังไม่มีจะถามก่อน
+                - Show dialog permission ว่าจะ accept หรือ denied
+            o ถ้ามีก็จะไป Check location gps ว่าทำงานอยู่หรือป่าว
+*/
 
 //    private void getLastLocation() {
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

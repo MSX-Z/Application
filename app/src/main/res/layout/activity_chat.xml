@@ -5,30 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    android:background="#e8eaf6"
+    android:background="@color/colorBg"
     tools:context=".ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bomtom_navbar">
+        android:background="@color/colorBg">
 
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
             android:id="@+id/profile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_person_gray"
             android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="10dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Full name"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
                     android:textAlignment="center"
                     android:textSize="18dp" />
 
@@ -58,9 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="example@gmail.com"
-                android:textColor="@color/colorGay"
-                android:textAlignment="center"
-                android:textSize="14dp"/>
+                android:textColor="@color/colorBlack"
+                android:textAlignment="center" />
 
         </LinearLayout>
 
@@ -80,8 +79,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@drawable/bg_bomtom_navbar"
-        android:padding="5dp">
+        android:background="@color/colorYellow"
+        android:padding="10dp">
 
         <EditText
             android:id="@+id/message"

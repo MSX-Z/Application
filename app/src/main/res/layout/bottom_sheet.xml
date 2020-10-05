@@ -4,77 +4,88 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:focusableInTouchMode="true"
-    android:background="#e8eaf6"
-    android:padding="15dp">
+    android:background="#e8eaf6">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_clear"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/custom_button_no_border"/>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
+        <LinearLayout
             android:paddingHorizontal="10dp"
-            android:textAlignment="textStart"
-            android:textColor="@color/colorBlack"
-            android:background="@drawable/custom_edittext_no_border"
-            android:textSize="18dp"
-            android:drawablePadding="5dp"/>
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp">
-
-        <EditText
-            android:id="@+id/edit_text"
+            android:paddingVertical="10dp"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:paddingStart="10dp"
-            android:background="@drawable/custom_edittext_no_border"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_clear_text"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/ic_clear"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"/>
+            <ImageButton
+                android:id="@+id/cancel"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_clear"
+                android:layout_gravity="right"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:background="@drawable/custom_button_no_border"/>
 
-    </RelativeLayout>
-<!--    <EditText-->
-<!--        android:id="@+id/edit"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:textColor="@color/colorGay"-->
-<!--        android:textAlignment="textStart"-->
-<!--        android:textSize="14dp"-->
-<!--        android:paddingHorizontal="10dp"-->
-<!--        android:background="@drawable/custom_edittext"/>-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:paddingHorizontal="10dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp"
+                    android:drawablePadding="5dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp">
+
+                <EditText
+                    android:id="@+id/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingHorizontal="10dp"
+                    android:inputType="textPersonName"
+                    android:theme="@style/AppTheme.NoActionBar"/>
+
+<!--                <Button-->
+<!--                    android:id="@+id/btn_clear_text"-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:background="@drawable/ic_clear"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:visibility="visible"/>-->
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 
     <Button
         android:id="@+id/save"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
-        android:text="save"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textSize="18dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorGreenTrue"
         android:background="@drawable/custom_button_no_border"/>
 
 </LinearLayout>

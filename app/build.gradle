@@ -11,6 +11,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true // พอใส่ compressImage เกิด Error Cannot fit requested classes in a single dex file เลยต้องใส้อันนี้ เพราะมีจำนวน method มากเกิน
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,28 +45,29 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     // Add library
+
     implementation 'com.wang.avi:library:2.1.3'// progressbar
-
     implementation 'com.android.support:design:28.0.0'// tablayout
-    implementation 'com.google.android.material:material:1.2.0'
 
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'com.github.mohammadatif:CircularImageView:1.0.0'//circle image
 
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'//Image-Cropper
+    implementation 'com.makeramen:roundedimageview:2.3.0'// RoundedImageView ตอนนี้ใช้แค่หหน้าของ Register Maid
 
-    implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'//Gps
-
     implementation 'com.squareup.picasso:picasso:2.71828'//picasso
 
     implementation 'com.android.support:cardview-v7:28.0.0' //cardview
     implementation 'com.android.support:recyclerview-v7:28.0.0' //recyclerview
 
     implementation 'nb.scode:ExpandableTextView:0.0.1d'//expandableTextView now
-
     implementation 'org.adw.library:discrete-seekbar:1.0.1' //seekbar
 
     implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'id.zelory:compressor:1.0.4'// compressImage
+
+    implementation 'com.tomer:fadingtextview:2.5'// fadingtextview
 
 //    implementation 'com.github.gifffert:ExpandableTextView:0.1.6'
 

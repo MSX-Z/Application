@@ -26,7 +26,7 @@ public class Test extends AppCompatActivity{
 
 //    private RecyclerView recyclerView;
 //    private DatabaseReference ref1,ref2;
-//    private RecyclerAdapter adapter;
+//    private SearchRecyclerAdapter adapter;
 //    private ArrayList<ProfileMaidData> item;
 //    private ProfileMaidData position_me,position_maid;
 
@@ -87,7 +87,7 @@ public class Test extends AppCompatActivity{
 //                        if(distance <= 3)
 //                            item.add(position_maid);
 //                    }
-//                    adapter = new RecyclerAdapter(getApplicationContext(),item);
+//                    adapter = new SearchRecyclerAdapter(getApplicationContext(),item);
 //                    recyclerView.setAdapter(adapter);
 //                }
 //            }
@@ -122,7 +122,7 @@ public class Test extends AppCompatActivity{
 //                    if(!data.getEmployment())
 //                        item.add(data);
 //                }
-//                adapter = new RecyclerAdapter(getApplicationContext(),item);
+//                adapter = new SearchRecyclerAdapter(getApplicationContext(),item);
 //                recyclerView.setAdapter(adapter);
 //            }
 //

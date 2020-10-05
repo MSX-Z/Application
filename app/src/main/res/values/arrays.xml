@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="RunningText1">
+        <item>Do you already have an account?</item>
+        <item>Are you ready to change your life?</item>
+        <item>Sign in to use it.</item>
+    </string-array>
+
+    <string-array name="RunningText2">
+        <item>You do not have a guest account yet, right?</item>
+        <item>Apply, what are you waiting for?</item>
+        <item>And your life will improve.</item>
+    </string-array>
+
+    <string-array name="RunningText3">
+        <item>Sign-up User</item>
+        <item>Or</item>
+        <item>Sign-up Maid</item>
+    </string-array>
+
+    <string-array name="RunningText4">
+        <item>If you forget your password</item>
+        <item>Please provide your registered email address.</item>
+        <item>Password reset will be sent by email.</item>
+    </string-array>
+
+    <string-array name="RunningText5">
+        <item>Male</item>
+        <item>Or</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="RunningText6">
+        <item>We send an SMS with a code to the number.</item>
+        <item>Then the system will check</item>
+        <item>For further login.</item>
+    </string-array>
+
+    <string-array name="RunningText7">
+        <item>You do not have a maid account yet, right?</item>
+        <item>Apply, what are you waiting for?</item>
+        <item>And the housewife herself will have more jobs.</item>
+    </string-array>
+
+    <string-array name="RunningText8">
+        <item>Take a picture of your ID card.</item>
+        <item>Then upload</item>
+        <item>Wait a moment to move on to the next step.</item>
+    </string-array>
+
+    <string-array name="RunningText9">
+        <item>Take a picture of your profile.</item>
+        <item>Then upload</item>
+        <item>Wait a moment to move on to the next step.</item>
+    </string-array>
+</resources>

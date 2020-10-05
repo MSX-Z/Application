@@ -17,25 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ChatActivity"
-                  android:theme="@style/AppTheme.NoActionBar.NoFullScreen"></activity>
-        <activity android:name=".UpdateEmailActivity" />
-        <activity android:name=".UpdatePasswordActivity" />
-        <activity android:name=".EditAddressBooksActivity" />
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".AddAddressActivity" />
         <activity android:name=".DetailSearchActivity" />
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".PhoneVerifyActivity"
-            android:screenOrientation="nosensor" />
         <activity
             android:name=".Test_Program.Test"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".RegisterMaidActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".ForgetPasswordActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".IntroActivity"
@@ -50,7 +35,47 @@
             android:name=".LoginActivity"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ChooseSignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
             android:name=".RegisterUserActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".RegisterMaidActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".ChooseGenderActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".IDCardActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="nosensor"></activity>
+        <activity
+            android:name=".PhoneVerifyActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ChatActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".AddressBooksActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".UserInformationActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".EditEmailActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".EditPasswordActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
